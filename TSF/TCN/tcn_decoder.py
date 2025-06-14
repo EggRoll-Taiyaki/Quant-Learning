@@ -10,7 +10,7 @@ class AttentionDecoder(nn.Module):
 
         Args:
             hidden_channels (int) : Dimension of encoder outputs and attention embedding.
-            output_channels (int) : Number of output dimensions
+            out_channels    (int) : Number of output dimensions
             output_len      (int) : Number of future time steps to forecast.
             num_heads       (int) : Number of attention heads.
     """
@@ -18,7 +18,7 @@ class AttentionDecoder(nn.Module):
     def __init__(
         self,
         hidden_channels : int,
-        output_channels : int, 
+        out_channels    : int, 
         output_len      : int,
         num_heads       : int = 2
     ):
@@ -36,7 +36,7 @@ class AttentionDecoder(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(hidden_channels, hidden_channels),
             nn.ReLU(),
-            nn.Linear(hidden_channels, output_channels)  # Predict ALL values per time step
+            nn.Linear(hidden_channels, out_channels)
         )
 
     def forward(
@@ -49,7 +49,7 @@ class AttentionDecoder(nn.Module):
                 encoder_outputs: (batch_size, seq_len, hidden_channels)
         
             Returns:
-                    forecast: (batch_size, output_len, output_channels)
+                       forecast: (batch_size, output_len, out_channels)
         """
         
         batch_size, seq_len, hidden_channels = encoder_outputs.shape
@@ -63,5 +63,5 @@ class AttentionDecoder(nn.Module):
 
         attn_output, _ = self.attn(query, encoder_outputs, encoder_outputs)
 
-        return self.fc(attn_output)  # (batch_size, output_len, output_channels)
+        return self.fc(attn_output) # (batch_size, output_len, out_channels)
 

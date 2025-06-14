@@ -33,8 +33,8 @@ class TimeSeriesDataset(Dataset):
     def __getitem__(self, idx):
 
         seq = self.data[idx: idx+self.seq_len]
-        x   = seq[:self.input_length]          
-        y   = seq[self.input_length:]
+        x   = seq[:self.input_len]          
+        y   = seq[self.input_len:]
         return torch.from_numpy(x), torch.from_numpy(y)
 
 

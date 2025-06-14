@@ -26,7 +26,7 @@ class TCNEncoder(nn.Module):
         super().__init__()
         
         layers = []
-        for i in range(len(num_channels)):
+        for i in range(len(hidden_channels)):
             in_ch   = in_channels if i == 0 else hidden_channels[i - 1]
             out_ch  = hidden_channels[i]
             layers += [ 

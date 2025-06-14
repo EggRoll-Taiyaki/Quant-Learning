@@ -18,10 +18,10 @@ if __name__ == '__main__':
     test_ds = TimeSeriesDataset(test_df, input_len, output_len)
     test_dl = DataLoader(test_ds, batch_size = 32, shuffle = True)
 
-    model = TCNForecastModel(
-        input_dim    = n_stocks,
-        hidden_dims  = [64, 64, 64],
-        output_steps = output_len,
+    model = TCNModel(
+        in_channels     = n_stocks,
+        hidden_channels = [64, 64, 64],
+        output_len      = output_len,
     ).to("cpu")
 
     optimizer = torch.optim.Adam(model.parameters(), lr = 1e-3)
